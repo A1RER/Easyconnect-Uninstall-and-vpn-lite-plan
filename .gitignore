@@ -1,5 +1,6 @@
-# 不要把任何含凭据的文件提交
+# Credentials — never commit filled-in launcher scripts
 *.bat
+!gui/build.bat
 *credentials*
 *password*
 *.key
@@ -7,7 +8,16 @@
 *.p12
 *.pfx
 
-# 系统
+# Build artifacts — build.bat regenerates these
+gui/CquptVpn.jar
+gui/*.class
+gui/build/
+
+# Upstream binary — use SHA256 verification per README instead of committing
+zju-connect.exe
+*.zip
+
+# OS
 Thumbs.db
 .DS_Store
 desktop.ini
