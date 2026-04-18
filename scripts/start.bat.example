@@ -1,0 +1,43 @@
+@echo off
+REM Copy this file to start.bat and fill in your credentials, OR keep it as a
+REM template and let the script prompt interactively (default below).
+REM
+REM start.bat is gitignored so your filled-in copy won't be committed.
+
+setlocal
+set VPN_SERVER=vpn.cqupt.edu.cn
+set SOCKS_BIND=127.0.0.1:1180
+set HTTP_BIND=127.0.0.1:1181
+
+REM --- Credentials ---------------------------------------------------------
+REM Interactive prompt (recommended: no plaintext on disk)
+set /p "VPN_USER=Username: "
+
+set "VPN_PASS="
+for /f "delims=" %%p in ('powershell -NoProfile -Command "$p=Read-Host -AsSecureString 'Password'; [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($p))"') do set "VPN_PASS=%%p"
+
+if not defined VPN_USER (echo Username cannot be empty. & pause & exit /b 1)
+if not defined VPN_PASS (echo Password cannot be empty. & pause & exit /b 1)
+REM -------------------------------------------------------------------------
+
+cd /d "%~dp0.."
+if not exist zju-connect.exe (
+  echo zju-connect.exe not found in %cd%.
+  echo Download it from https://github.com/Mythologyli/zju-connect/releases
+  pause
+  exit /b 1
+)
+
+zju-connect.exe ^
+  -server %VPN_SERVER% ^
+  -username %VPN_USER% ^
+  -password %VPN_PASS% ^
+  -socks-bind %SOCKS_BIND% ^
+  -http-bind %HTTP_BIND% ^
+  -disable-zju-config ^
+  -disable-zju-dns ^
+  -skip-domain-resource ^
+  -keep-alive-url http://%VPN_SERVER%/
+
+endlocal
+pause
