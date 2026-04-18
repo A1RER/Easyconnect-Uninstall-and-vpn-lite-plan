@@ -1,0 +1,13 @@
+# 不要把任何含凭据的文件提交
+*.bat
+*credentials*
+*password*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 系统
+Thumbs.db
+.DS_Store
+desktop.ini
