@@ -104,6 +104,8 @@ start.bat
 
 [docs/JOURNEY.md](docs/JOURNEY.md) —— 完整的故障排查、根因分析（PKI / 自签 CA / miniblink / Windows 双层证书库）、方案对比、网络知识点与安全清理流程。
 
+[docs/UNINSTALL.md](docs/UNINSTALL.md) —— 彻底卸载 Sangfor EasyConnect 的完整指南：官方卸载器遗漏的服务、内核驱动、根证书、防火墙规则、SysWOW64 DLL 等全覆盖，附逐步验收清单。
+
 ## 参考
 
 - [mythologyli/zju-connect](https://github.com/mythologyli/zju-connect)
