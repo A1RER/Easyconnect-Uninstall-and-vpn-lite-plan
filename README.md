@@ -3,6 +3,11 @@
 重庆邮电大学校园 VPN 的轻量化方案。替代原装 Sangfor EasyConnect：
 单二进制、零驱动、零开机自启、不导入根证书。
 
+> **许可证说明**：本项目（GUI 与脚本）以 [MIT License](LICENSE) 发布。底层核心
+> [`zju-connect`](https://github.com/Mythologyli/zju-connect) 由 Mythologyli 开发，
+> 遵循 [GNU AGPL-3.0](https://github.com/Mythologyli/zju-connect/blob/main/LICENSE)，
+> 需自行下载，不随本仓库分发。
+
 ## 组件
 
 | 名称 | 作用 |
@@ -105,6 +110,12 @@ start.bat
 [docs/JOURNEY.md](docs/JOURNEY.md) —— 完整的故障排查、根因分析（PKI / 自签 CA / miniblink / Windows 双层证书库）、方案对比、网络知识点与安全清理流程。
 
 [docs/UNINSTALL.md](docs/UNINSTALL.md) —— 彻底卸载 Sangfor EasyConnect 的完整指南：官方卸载器遗漏的服务、内核驱动、根证书、防火墙规则、SysWOW64 DLL 等全覆盖，附逐步验收清单。
+
+## 许可证
+
+本项目（GUI 与脚本）以 [MIT License](LICENSE) 发布。
+
+`zju-connect.exe` 由 [Mythologyli/zju-connect](https://github.com/Mythologyli/zju-connect) 提供，遵循 [GNU AGPL-3.0](https://github.com/Mythologyli/zju-connect/blob/main/LICENSE)，需自行下载，不随本仓库分发。
 
 ## 参考
 
