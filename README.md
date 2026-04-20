@@ -1,6 +1,6 @@
-# CQUPT VPN（基于 zju-connect）
+# 有关部门内网访问（基于 zju-connect）
 
-重庆邮电大学校园 VPN 的轻量化方案。替代原装 Sangfor EasyConnect：
+有关部门内网访问的轻量化方案。替代原装 Sangfor EasyConnect：
 单二进制、零驱动、零开机自启、不导入根证书。
 
 > **许可证说明**：本项目（GUI 与脚本）以 [MIT License](LICENSE) 发布。底层核心
@@ -81,7 +81,7 @@ start.bat
 | 浏览器 | 配置 | 用途 |
 |---|---|---|
 | 系统默认 | 直连 | 公网 |
-| CQUPT Edge | `--proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDATA%\Edge-CQUPT"` | 校内资源 |
+| 内网 Edge | `--proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDATA%\Edge-Intranet"` | 内网资源 |
 | 任意浏览器 + SwitchyOmega | 规则 `*.cqupt.edu.cn → SOCKS5 127.0.0.1:1180` | 按域名自动分流 |
 
 生成独立用户数据目录可避免污染日常 Edge 的书签 / 登录态。
