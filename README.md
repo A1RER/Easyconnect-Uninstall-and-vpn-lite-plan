@@ -82,7 +82,7 @@ start.bat
 |---|---|---|
 | 系统默认 | 直连 | 公网 |
 | 内网 Edge | `--proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDATA%\Edge-Intranet"` | 内网资源 |
-| 任意浏览器 + SwitchyOmega | 规则 `*.cqupt.edu.cn → SOCKS5 127.0.0.1:1180` | 按域名自动分流 |
+| 任意浏览器 + SwitchyOmega | 规则 `*.example.edu.cn → SOCKS5 127.0.0.1:1180` | 按域名自动分流 |
 
 生成独立用户数据目录可避免污染日常 Edge 的书签 / 登录态。
 
