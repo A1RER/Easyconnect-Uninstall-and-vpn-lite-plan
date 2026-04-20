@@ -19,7 +19,7 @@
 
 ## 1. 背景
 
-学校使用 Sangfor（深信服）的 SSL VPN 方案，终端通过 EasyConnect 客户端接入 `vpn.cqupt.edu.cn`。最早几个月工作正常，后陆续出现无法连接、升级后复发等问题，经两轮修复后最终决定放弃原装客户端，改用开源的 zju-connect。
+学校使用 Sangfor（深信服）的 SSL VPN 方案，终端通过 EasyConnect 客户端接入 `vpn.example.edu.cn`。最早几个月工作正常，后陆续出现无法连接、升级后复发等问题，经两轮修复后最终决定放弃原装客户端，改用开源的 zju-connect。
 
 ---
 
@@ -50,7 +50,7 @@
 │      │                                              │
 │      │ 隧道建立后                                    │
 │      ▼                                              │
-│  SangforCSClient.exe → vpn.cqupt.edu.cn:443         │
+│  SangforCSClient.exe → vpn.example.edu.cn:443         │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -89,7 +89,7 @@ Windows 的 **Root 证书库**分两层：
 
 ### 3.5 根因四：服务端强制升级客户端
 
-- `vpn.cqupt.edu.cn` 服务端升级后会强制客户端升级（7.6.7.9 → 7.6.7.201 → M7.6.8R2）
+- `vpn.example.edu.cn` 服务端升级后会强制客户端升级（7.6.7.9 → 7.6.7.201 → M7.6.8R2）
 - 每次升级会重建 ECAgent 安装目录与证书
 - **修复过的证书信任被覆盖 → 问题复发 → 又要重新修**
 
@@ -132,7 +132,7 @@ EasyConnect 走 TUN 模式（装驱动），zju-connect 默认走用户态 SOCKS
 ### 4.5 DNS 分流
 
 - **本地 DNS**：用户设的 DNS（114.114.114.114 / 系统默认）
-- **远程 DNS**：VPN 服务器提供的内网 DNS（能解析 `jwzx.cqupt.edu.cn` 这类仅内网暴露的服务）
+- **远程 DNS**：VPN 服务器提供的内网 DNS（能解析 `jwzx.example.edu.cn` 这类仅内网暴露的服务）
 - `zju-connect -disable-zju-dns` 因为是非浙大用户，不应使用 ZJU 预设的 DNS 劫持规则
 
 ### 4.6 进程隔离思路
@@ -222,7 +222,7 @@ https://www.virustotal.com/gui/file/55f8ddb6f0971676e984ff68bb3476c1b5a07a64dcff
 
 ```bat
 zju-connect.exe ^
-  -server vpn.cqupt.edu.cn ^
+  -server vpn.example.edu.cn ^
   -username <学号> ^
   -password <密码> ^
   -socks-bind 127.0.0.1:1180 ^
@@ -230,7 +230,7 @@ zju-connect.exe ^
   -disable-zju-config ^
   -disable-zju-dns ^
   -skip-domain-resource ^
-  -keep-alive-url http://vpn.cqupt.edu.cn/
+  -keep-alive-url http://vpn.example.edu.cn/
 ```
 
 **参数解释**：
@@ -271,7 +271,7 @@ zju-connect.exe ^
 └──────────────────────────────────────────────────────────────┘
           │                 │                   │
           ▼                 ▼                   ▼
-    国外代理节点        国内 CDN           vpn.cqupt.edu.cn
+    国外代理节点        国内 CDN           vpn.example.edu.cn
                                                 │
                                                 ▼
                                             校内资源
