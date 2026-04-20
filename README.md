@@ -1,6 +1,6 @@
-# 有关部门内网访问（基于 zju-connect）
+# 校园内网 VPN 轻量化接入（基于 zju-connect）
 
-有关部门内网访问的轻量化方案。替代原装 Sangfor EasyConnect：
+校园 VPN 的轻量化接入方案，替代原装 Sangfor EasyConnect：
 单二进制、零驱动、零开机自启、不导入根证书。
 
 > **许可证说明**：本项目（GUI 与脚本）以 [MIT License](LICENSE) 发布。底层核心
@@ -8,12 +8,14 @@
 > 遵循 [GNU AGPL-3.0](https://github.com/Mythologyli/zju-connect/blob/main/LICENSE)，
 > 需自行下载，不随本仓库分发。
 
+> **占位符说明**：下文中出现的 `vpn.your-school.edu.cn` 是占位符，实际使用时请替换为你所在学校 VPN 网关的真实域名。同样，`scripts/start.bat.example`、`gui/IntranetVpn.java` 中的 `SERVER` 字段也需按需修改。
+
 ## 组件
 
 | 名称 | 作用 |
 |---|---|
 | `zju-connect.exe` | Sangfor SSL VPN 协议客户端（Go 开源，需自行下载） |
-| `gui/CquptVpn.jar` | Java Swing 图形前端，封装启动 / 断开 / 日志 / 打开 Edge |
+| `gui/IntranetVpn.jar` | Java Swing 图形前端，封装启动 / 断开 / 日志 / 打开 Edge |
 | `scripts/start.bat.example` | 命令行启动模板（复制为 `start.bat` 后填入凭据） |
 
 ## 暴露端口
@@ -45,7 +47,7 @@ cd gui
 build.bat
 ```
 
-产物：`gui\CquptVpn.jar`。需要系统安装 JDK 11+。不想构建可跳过，直接用命令行。
+产物：`gui\IntranetVpn.jar`。需要系统安装 JDK 11+。不想构建可跳过，直接用命令行。
 
 ### 3. 目录结构（示例）
 
@@ -53,7 +55,7 @@ build.bat
 <任意目录>\
 ├── zju-connect.exe
 ├── scripts\start.bat          # 由 start.bat.example 复制而来
-└── gui\CquptVpn.jar
+└── gui\IntranetVpn.jar
 ```
 
 ## 运行
@@ -61,7 +63,7 @@ build.bat
 ### GUI
 
 ```bat
-javaw -jar gui\CquptVpn.jar
+javaw -jar gui\IntranetVpn.jar
 ```
 
 或双击 jar。输入学号 / 密码 → `连接`。GUI 会在同级或父级目录下自动查找 `zju-connect.exe`。
@@ -82,7 +84,7 @@ start.bat
 |---|---|---|
 | 系统默认 | 直连 | 公网 |
 | 内网 Edge | `--proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDATA%\Edge-Intranet"` | 内网资源 |
-| 任意浏览器 + SwitchyOmega | 规则 `*.example.edu.cn → SOCKS5 127.0.0.1:1180` | 按域名自动分流 |
+| 任意浏览器 + SwitchyOmega | 规则 `*.your-school.edu.cn → SOCKS5 127.0.0.1:1180` | 按域名自动分流 |
 
 生成独立用户数据目录可避免污染日常 Edge 的书签 / 登录态。
 
