@@ -1,6 +1,6 @@
 # 从 Sangfor EasyConnect 迁移到 zju-connect：故障排查与技术分析
 
-> 环境：Windows 11，CQUPT（重庆邮电大学）校园网
+> 环境：Windows 11，有关部门内网
 
 ---
 
@@ -260,7 +260,7 @@ zju-connect.exe ^
 │         │ (系统代理)                    │                      │
 │         │                              │                      │
 │  ┌──────┴────────┐  ┌────────────┐  ┌─┴──────────────────┐   │
-│  │ Chrome        │  │ 联想浏览器  │  │ CQUPT Edge         │   │
+│  │ Chrome        │  │ 联想浏览器  │  │ 内网 Edge         │   │
 │  │ (国外站点)    │  │ (国内直连)  │  │ (校内网 via SOCKS5)│   │
 │  └───────────────┘  └────────────┘  └────────────────────┘   │
 │                                                               │
@@ -292,12 +292,12 @@ zju-connect.exe ^
 |---|---|---|
 | 联想浏览器 | 直连 | 国内网站 |
 | Chrome | 系统代理 (v2rayN 10808) | 国外网站 |
-| **CQUPT Edge** | 命令行参数 `--proxy-server="socks5://127.0.0.1:1180"` | 校内网 |
+| **内网 Edge** | 命令行参数 `--proxy-server="socks5://127.0.0.1:1180"` | 校内网 |
 
-**CQUPT Edge 快捷方式**：
+**内网 Edge 快捷方式**：
 ```
 Target:    C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-Arguments: --proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDATA%\Edge-CQUPT"
+Arguments: --proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDATA%\Edge-Intranet"
 ```
 
 `--user-data-dir` 指定独立的用户数据目录，避免干扰日常 Edge 的书签和登录状态。
@@ -307,8 +307,8 @@ Arguments: --proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDA
 ```
 # 当前方案卸载
 - 删除 D:\easierconnect\
-- 删除 C:\Users\<User>\Desktop\CQUPT Edge.lnk
-- 删除 %LOCALAPPDATA%\Edge-CQUPT\
+- 删除 C:\Users\<User>\Desktop\内网 Edge.lnk
+- 删除 %LOCALAPPDATA%\Edge-Intranet\
 
 # 旧版 EasyConnect 残留（如还未清理）
 - 删除 C:\Program Files (x86)\Sangfor\
