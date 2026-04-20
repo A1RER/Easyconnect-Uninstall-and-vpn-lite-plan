@@ -8,10 +8,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class CquptVpn {
+public class IntranetVpn {
 
     private static final String EXE_NAME = "zju-connect.exe";
-    private static final String SERVER = "vpn.cqupt.edu.cn";
+    private static final String SERVER = "vpn.your-school.edu.cn";
     private static final String SOCKS_BIND = "127.0.0.1:1180";
     private static final String HTTP_BIND = "127.0.0.1:1181";
     private static final String EDGE_EXE =
@@ -33,13 +33,13 @@ public class CquptVpn {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {}
-        SwingUtilities.invokeLater(() -> new CquptVpn().show());
+        SwingUtilities.invokeLater(() -> new IntranetVpn().show());
     }
 
     private void show() {
         resolveExe();
 
-        frame = new JFrame("CQUPT VPN");
+        frame = new JFrame("内网 VPN");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override public void windowClosing(WindowEvent e) {
@@ -85,7 +85,7 @@ public class CquptVpn {
         south.add(statusLabel, BorderLayout.WEST);
 
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
-        edgeBtn = new JButton("打开 CQUPT Edge");
+        edgeBtn = new JButton("打开内网 Edge");
         edgeBtn.setEnabled(false);
         edgeBtn.addActionListener(e -> openEdge());
         connectBtn = new JButton("连接");
@@ -123,7 +123,7 @@ public class CquptVpn {
 
     private static File getJarDir() {
         try {
-            File jar = new File(CquptVpn.class.getProtectionDomain()
+            File jar = new File(IntranetVpn.class.getProtectionDomain()
                     .getCodeSource().getLocation().toURI());
             return jar.getParentFile();
         } catch (URISyntaxException e) {
@@ -252,7 +252,7 @@ public class CquptVpn {
             new ProcessBuilder(
                     EDGE_EXE,
                     "--proxy-server=socks5://" + SOCKS_BIND,
-                    "--user-data-dir=" + System.getenv("LOCALAPPDATA") + "\\Edge-CQUPT"
+                    "--user-data-dir=" + System.getenv("LOCALAPPDATA") + "\\Edge-Intranet"
             ).start();
         } catch (IOException ex) {
             logArea.append("[open edge error] " + ex + "\n");

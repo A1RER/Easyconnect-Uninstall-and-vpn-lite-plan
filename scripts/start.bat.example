@@ -5,7 +5,8 @@ REM
 REM start.bat is gitignored so your filled-in copy won't be committed.
 
 setlocal
-set VPN_SERVER=vpn.cqupt.edu.cn
+REM Replace with your school's VPN gateway hostname before running.
+set VPN_SERVER=vpn.your-school.edu.cn
 set SOCKS_BIND=127.0.0.1:1180
 set HTTP_BIND=127.0.0.1:1181
 
