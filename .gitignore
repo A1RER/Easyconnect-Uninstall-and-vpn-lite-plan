@@ -1,24 +1,67 @@
-# Credentials — never commit filled-in launcher scripts
+# ===== Credentials / secrets — never commit =====
+# 启动脚本（含账号密码的填充版本）
 *.bat
 !gui/build.bat
+start.bat
+scripts/start.bat
+
+# 通用凭据文件
 *credentials*
+*secret*
+*secrets*
 *password*
 *.key
 *.pem
 *.p12
 *.pfx
+*.jks
+*.keystore
 
-# Build artifacts — build.bat regenerates these
+# 环境变量 / 配置
+.env
+.env.*
+!.env.example
+config.local.*
+*.local.json
+*.local.yaml
+*.local.yml
+
+# Token / API Key 常见文件名
+*.token
+auth.json
+credentials.json
+.netrc
+
+# ===== Build artifacts — build.bat regenerates these =====
 gui/IntranetVpn.jar
 gui/*.class
 gui/build/
 
-# Upstream binary — use SHA256 verification per README instead of committing
+# ===== Upstream binary / 生成文件 — 用 SHA256 校验代替提交 =====
 zju-connect.exe
 *.zip
+*.pdf
+*.exe
+!gui/build.bat
 
-# OS
+# ===== Logs（可能包含账号密码）=====
+*.log
+logs/
+
+# ===== OS =====
 Thumbs.db
 .DS_Store
 desktop.ini
+
+# ===== Editor / IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .aider*
+
+# ===== Python / Node 缓存（防止未来误用）=====
+__pycache__/
+*.py[cod]
+node_modules/
