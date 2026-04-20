@@ -1,8 +1,8 @@
-# Creates a desktop shortcut that silently launches CquptVpn.jar via CquptVpn.vbs.
+﻿# Creates a desktop shortcut that silently launches IntranetVpn.jar via IntranetVpn.vbs.
 $guiDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
-$vbs     = Join-Path $guiDir 'CquptVpn.vbs'
+$vbs     = Join-Path $guiDir 'IntranetVpn.vbs'
 $desktop = [Environment]::GetFolderPath('Desktop')
-$lnk     = Join-Path $desktop 'CQUPT VPN.lnk'
+$lnk     = Join-Path $desktop ([char]0x5185 + [char]0x7F51 + ' VPN.lnk')
 
 if (-not (Test-Path $vbs)) {
     Write-Error "Missing $vbs. Run build.bat first, then re-run this script."

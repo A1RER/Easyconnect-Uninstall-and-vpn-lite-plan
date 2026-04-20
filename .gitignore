@@ -9,7 +9,7 @@
 *.pfx
 
 # Build artifacts — build.bat regenerates these
-gui/CquptVpn.jar
+gui/IntranetVpn.jar
 gui/*.class
 gui/build/
 

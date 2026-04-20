@@ -1,2 +1,2 @@
-Main-Class: CquptVpn
+Main-Class: IntranetVpn
 
