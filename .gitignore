@@ -26,6 +26,10 @@ config.local.*
 *.local.yaml
 *.local.yml
 
+# GUI 持久化的用户配置（含私有 VPN 地址）
+gui/vpn.conf
+vpn.conf
+
 # Token / API Key 常见文件名
 *.token
 auth.json

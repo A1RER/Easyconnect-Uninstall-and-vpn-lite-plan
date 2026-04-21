@@ -11,13 +11,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class IntranetVpn {
 
     private static final String EXE_NAME = "zju-connect.exe";
-    private static final String SERVER = "vpn.your-school.edu.cn";
+    private static final String CONFIG_NAME = "vpn.conf";
     private static final String SOCKS_BIND = "127.0.0.1:1180";
     private static final String HTTP_BIND = "127.0.0.1:1181";
     private static final String EDGE_EXE =
             "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 
     private JFrame frame;
+    private JTextField serverField;
     private JTextField userField;
     private JPasswordField passField;
     private JButton connectBtn;
@@ -58,12 +59,27 @@ public class IntranetVpn {
         g.anchor = GridBagConstraints.WEST;
 
         g.gridx = 0; g.gridy = 0;
+        form.add(new JLabel("VPN 地址:"), g);
+        g.gridx = 1; g.fill = GridBagConstraints.HORIZONTAL; g.weightx = 1;
+        serverField = new JTextField(18);
+        serverField.setToolTipText("只填域名或 IP，不要带 https:// 前缀和末尾的 /");
+        String saved = loadServer();
+        if (saved != null) serverField.setText(saved);
+        form.add(serverField, g);
+
+        g.gridx = 1; g.gridy = 1;
+        JLabel serverHint = new JLabel("示例: vpn.your-school.edu.cn  (不要带 https://)");
+        serverHint.setFont(serverHint.getFont().deriveFont(Font.PLAIN, 11f));
+        serverHint.setForeground(Color.GRAY);
+        form.add(serverHint, g);
+
+        g.gridx = 0; g.gridy = 2; g.fill = GridBagConstraints.NONE; g.weightx = 0;
         form.add(new JLabel("学号:"), g);
         g.gridx = 1; g.fill = GridBagConstraints.HORIZONTAL; g.weightx = 1;
         userField = new JTextField(18);
         form.add(userField, g);
 
-        g.gridx = 0; g.gridy = 1; g.fill = GridBagConstraints.NONE; g.weightx = 0;
+        g.gridx = 0; g.gridy = 3; g.fill = GridBagConstraints.NONE; g.weightx = 0;
         form.add(new JLabel("密码:"), g);
         g.gridx = 1; g.fill = GridBagConstraints.HORIZONTAL; g.weightx = 1;
         passField = new JPasswordField(18);
@@ -101,7 +117,11 @@ public class IntranetVpn {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        userField.requestFocusInWindow();
+        if (serverField.getText().trim().isEmpty()) {
+            serverField.requestFocusInWindow();
+        } else {
+            userField.requestFocusInWindow();
+        }
     }
 
     private void resolveExe() {
@@ -144,17 +164,19 @@ public class IntranetVpn {
             statusLabel.setText("状态: 找不到 " + EXE_NAME);
             return;
         }
+        String server = serverField.getText().trim();
         String user = userField.getText().trim();
         char[] passChars = passField.getPassword();
         String pass = new String(passChars);
-        if (user.isEmpty() || pass.isEmpty()) {
-            statusLabel.setText("状态: 请输入学号和密码");
+        if (server.isEmpty() || user.isEmpty() || pass.isEmpty()) {
+            statusLabel.setText("状态: 请输入 VPN 地址、学号和密码");
             return;
         }
+        saveServer(server);
 
         ProcessBuilder pb = new ProcessBuilder(
                 exeFile.getAbsolutePath(),
-                "-server", SERVER,
+                "-server", server,
                 "-username", user,
                 "-password", pass,
                 "-socks-bind", SOCKS_BIND,
@@ -162,7 +184,7 @@ public class IntranetVpn {
                 "-disable-zju-config",
                 "-disable-zju-dns",
                 "-skip-domain-resource",
-                "-keep-alive-url", "http://" + SERVER + "/"
+                "-keep-alive-url", "http://" + server + "/"
         );
         pb.directory(workDir);
         pb.redirectErrorStream(true);
@@ -240,6 +262,32 @@ public class IntranetVpn {
         connectBtn.setText("连接");
         edgeBtn.setEnabled(false);
         statusLabel.setText("状态: 未连接");
+    }
+
+    private File configFile() {
+        File dir = getJarDir();
+        return dir == null ? null : new File(dir, CONFIG_NAME);
+    }
+
+    private String loadServer() {
+        File cf = configFile();
+        if (cf == null || !cf.isFile()) return null;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                new FileInputStream(cf), StandardCharsets.UTF_8))) {
+            String line = br.readLine();
+            return line == null ? null : line.trim();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private void saveServer(String server) {
+        File cf = configFile();
+        if (cf == null) return;
+        try (Writer w = new OutputStreamWriter(
+                new FileOutputStream(cf), StandardCharsets.UTF_8)) {
+            w.write(server);
+        } catch (IOException ignored) {}
     }
 
     private void openEdge() {
