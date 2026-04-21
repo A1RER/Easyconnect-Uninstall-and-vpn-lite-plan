@@ -8,7 +8,7 @@
 > 遵循 [GNU AGPL-3.0](https://github.com/Mythologyli/zju-connect/blob/main/LICENSE)，
 > 需自行下载，不随本仓库分发。
 
-> **占位符说明**：下文中出现的 `vpn.your-school.edu.cn` 是占位符，实际使用时请替换为你所在学校 VPN 网关的真实域名。同样，`scripts/start.bat.example`、`gui/IntranetVpn.java` 中的 `SERVER` 字段也需按需修改。
+> **占位符说明**：下文中出现的 `vpn.your-school.edu.cn` 是占位符，实际使用时请替换为你所在学校 VPN 网关的真实域名。`scripts/start.bat.example` 中的 `-server` 参数需按需修改；GUI 版本会在界面内直接输入，无需修改源码。
 
 ## 组件
 
@@ -66,7 +66,7 @@ build.bat
 javaw -jar gui\IntranetVpn.jar
 ```
 
-或双击 jar。输入学号 / 密码 → `连接`。GUI 会在同级或父级目录下自动查找 `zju-connect.exe`。
+或双击 jar。**首次使用**填入 VPN 地址（只填域名，不带 `https://`）、学号、密码 → `连接`；地址会自动保存至 `gui\vpn.conf`，下次启动自动回填。GUI 会在同级或父级目录下自动查找 `zju-connect.exe`。
 
 ### 命令行
 
@@ -106,6 +106,7 @@ start.bat
 - `start.bat.example` 默认不包含凭据，使用时需手动填入或改为交互输入
 - `.gitignore` 已屏蔽 `*.bat`、`*credentials*`、`*password*`，防止误提交
 - GUI 不落盘凭据；密码字段使用后立即置零
+- `gui\vpn.conf` 仅保存 VPN 域名（非凭据），已由 `.gitignore` 忽略
 
 ## 深入阅读
 

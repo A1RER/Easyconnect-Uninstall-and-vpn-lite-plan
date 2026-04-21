@@ -342,7 +342,7 @@ Arguments: --proxy-server="socks5://127.0.0.1:1180" --user-data-dir="%LOCALAPPDA
 
 - [ ] 用 TOTP 或启动时手动输入替代明文密码
 - [ ] 监听 Windows 网络变化事件，切网后自动重连
-- [ ] GUI wrapper：任务栏图标 + 一键连断 + 状态展示
+- [x] GUI wrapper：任务栏图标 + 一键连断 + 状态展示（`gui/IntranetVpn.jar`，VPN 地址运行时输入，持久化至 `vpn.conf`）
 - [ ] 自动化更新：定期检查 zju-connect 新版本 + SHA256 校验
 
 ---
